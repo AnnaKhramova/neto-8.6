@@ -25,12 +25,13 @@ public class PostRepositoryImpl implements PostRepository {
   }
 
   public Optional<PostDto> getById(long id) {
-    Post model = posts.get(id);
-    if (!model.getRemoved()) {
-      return Optional.ofNullable(postMapper.modelToDto(model));
-    } else {
-      return Optional.empty();
+    if (posts.containsKey(id)) {
+      Post model = posts.get(id);
+      if (!model.getRemoved()) {
+        return Optional.ofNullable(postMapper.modelToDto(model));
+      }
     }
+    return Optional.empty();
   }
 
   public PostDto save(PostDto post) {
@@ -44,6 +45,6 @@ public class PostRepositoryImpl implements PostRepository {
   }
 
   public void removeById(long id) {
-    posts.remove(id);
+    posts.get(id).setRemoved(true);
   }
 }

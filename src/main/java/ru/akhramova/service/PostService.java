@@ -21,7 +21,11 @@ public class PostService {
   }
 
   public Optional<PostDto> getById(long id) {
-    return repository.getById(id);
+    Optional<PostDto> post = repository.getById(id);
+    if (!post.isPresent()) {
+      throw new NotFoundException("Not Found");
+    }
+    return post;
   }
 
   public PostDto save(PostDto post) {
