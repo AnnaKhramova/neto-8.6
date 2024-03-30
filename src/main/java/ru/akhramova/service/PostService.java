@@ -6,6 +6,7 @@ import ru.akhramova.exception.NotFoundException;
 import ru.akhramova.repository.PostRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -19,8 +20,8 @@ public class PostService {
     return repository.all();
   }
 
-  public PostDto getById(long id) {
-    return repository.getById(id).orElseThrow(NotFoundException::new);
+  public Optional<PostDto> getById(long id) {
+    return repository.getById(id);
   }
 
   public PostDto save(PostDto post) {

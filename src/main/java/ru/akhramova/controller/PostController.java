@@ -1,5 +1,6 @@
 package ru.akhramova.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.akhramova.dto.PostDto;
 import ru.akhramova.service.PostService;
@@ -21,8 +22,8 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public PostDto getById(@PathVariable long id) {
-        return service.getById(id);
+    public ResponseEntity<PostDto> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.of(service.getById(id));
     }
 
     @PostMapping
