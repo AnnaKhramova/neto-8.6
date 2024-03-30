@@ -1,7 +1,7 @@
 package ru.akhramova.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.akhramova.model.Post;
+import ru.akhramova.dto.PostDto;
 import ru.akhramova.service.PostService;
 
 import java.util.List;
@@ -16,17 +16,17 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> all() {
+    public List<PostDto> all() {
         return service.all();
     }
 
     @GetMapping("/{id}")
-    public Post getById(@PathVariable long id) {
+    public PostDto getById(@PathVariable long id) {
         return service.getById(id);
     }
 
     @PostMapping
-    public Post save(@RequestBody Post post) {
+    public PostDto save(@RequestBody PostDto post) {
         return service.save(post);
     }
 

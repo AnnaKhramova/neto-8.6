@@ -1,16 +1,16 @@
 package ru.akhramova.repository;
 
-import ru.akhramova.model.Post;
+import ru.akhramova.dto.PostDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository {
-    List<Post> all();
+    List<PostDto> all();
 
-    Optional<Post> getById(long id);
+    Optional<PostDto> getById(long id);
 
-    Post save(Post post);
+    PostDto save(PostDto post);
 
     void removeById(long id);
 }

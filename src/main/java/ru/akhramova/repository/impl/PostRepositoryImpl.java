@@ -1,6 +1,8 @@
 package ru.akhramova.repository.impl;
 
 import org.springframework.stereotype.Repository;
+import ru.akhramova.dto.PostDto;
+import ru.akhramova.mapper.PostMapper;
 import ru.akhramova.model.Post;
 import ru.akhramova.repository.PostRepository;
 
@@ -12,25 +14,32 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
+  private final PostMapper postMapper = new PostMapper();
+
   static AtomicLong maxId = new AtomicLong(0);
 
   private Map<Long, Post> posts = new ConcurrentHashMap<>();
 
-  public List<Post> all() {
-    return posts.values().stream().toList();
+  public List<PostDto> all() {
+    return posts.values().stream().map(postMapper::modelToDto).toList();
   }
 
-  public Optional<Post> getById(long id) {
-    return Optional.ofNullable(posts.get(id));
+  public Optional<PostDto> getById(long id) {
+    Post model = posts.get(id);
+    if (!model.getRemoved()) {
+      return Optional.ofNullable(postMapper.modelToDto(model));
+    } else {
+      return Optional.empty();
+    }
   }
 
-  public Post save(Post post) {
+  public PostDto save(PostDto post) {
     if (post.getId() == 0L) {
       post.setId(maxId.incrementAndGet());
     } else if (post.getId() > maxId.longValue()) {
       return null;
     }
-    posts.put(post.getId(), post);
+    posts.put(post.getId(), postMapper.dtoToModel(post));
     return post;
   }
 

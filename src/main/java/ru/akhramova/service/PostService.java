@@ -1,8 +1,8 @@
 package ru.akhramova.service;
 
 import org.springframework.stereotype.Service;
+import ru.akhramova.dto.PostDto;
 import ru.akhramova.exception.NotFoundException;
-import ru.akhramova.model.Post;
 import ru.akhramova.repository.PostRepository;
 
 import java.util.List;
@@ -15,15 +15,15 @@ public class PostService {
     this.repository = repository;
   }
 
-  public List<Post> all() {
+  public List<PostDto> all() {
     return repository.all();
   }
 
-  public Post getById(long id) {
+  public PostDto getById(long id) {
     return repository.getById(id).orElseThrow(NotFoundException::new);
   }
 
-  public Post save(Post post) {
+  public PostDto save(PostDto post) {
     return repository.save(post);
   }
 
